@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BoardDAO">
+
+
+<select id="getBoardList" resultType="board">
+
+<![CDATA[
+
+		SELECT * FROM board ORDER BY no DESC 
+		
+		]]>
+</select>
+
+<select id="getBoard" resultType="board">
+<![CDATA[
+		SELECT * FROM board where no=#{no} ORDER BY no DESC
+				]]>
+</select>
+
+<!-- 
+   		
+   		
+ 		select rnum , c.* from (select  x.*, rownum as rnum from (select a.* from board a order by no) x) c where rnum between 
+		
+		<foreach collection="array" item="item" index="index" separator="and" >
+	      ${item}
+		</foreach>
+   		
+   		<foreach collection="list" item="keyword" index="index" separator="and">
+		#{keyword.value}
+		</foreach>
+   		
+<select id="getBoard" parameterType="board" resultType="board">
+
+<![CDATA[
+		SELECT m.*,a.name FROM board AS m 
+		JOIN authority AS a ON m.authority = a.authority
+		WHERE m.authority IN
+		<foreach collection="userArray" item="arr" open="(" close=")" separator=",">
+		 #{arr}
+		</foreach>
+		ORDER BY m.authority;	
+		]]>
+</select>
+  -->
+
+
+<select id="boardWriterSearch" parameterType="String" resultType="board">
+<![CDATA[
+		SELECT * FROM board where writer like '%'||#{search_keyword}||'%' order by no desc 
+				]]>
+</select>
+
+<select id="boardContentSearch" parameterType="String" resultType="board">
+<![CDATA[
+		SELECT * FROM board where content like '%'||#{search_keyword}||'%' order by no desc 
+				]]>
+</select>
+
+<select id="boardSubjectSearch" parameterType="String" resultType="board">
+<![CDATA[
+		SELECT * FROM board where subject like '%'||#{search_keyword}||'%' order by no desc 
+				]]>
+</select>
+
+
+<insert id="insertBoard" parameterType="board">
+<![CDATA[
+INSERT INTO board (no,writer,pwd,subject,content,regdate) VALUES (board_seq.nextval,#{writer},#{pwd},#{subject},#{content},sysdate)
+		]]>
+</insert>
+
+<delete id="deleteBoard" parameterType="board">
+<![CDATA[
+DELETE FROM board WHERE no=#{no}
+		]]>
+
+</delete>
+
+<update id="updateBoard" parameterType="board" >
+<![CDATA[ 
+      UPDATE board SET
+      writer = #{writer}
+      ,pwd = #{pwd}
+      ,subject = #{subject}
+      ,content = #{content}
+      WHERE no = #{no}
+		]]>
+</update>
+
+
+</mapper>

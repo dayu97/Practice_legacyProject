@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="MemberDAO">
+
+	<select id="logincheck" parameterType="member" resultType="member">
+		SELECT * FROM TPMEMBER WHERE mid = #{mid} and mpw= #{mpw}
+	</select>
+
+	<!-- 회원가입 -->
+	<insert id="memberJoin" parameterType="member"> 
+	insert into tpmember values( #{mid}, #{mpw}, #{mname}, #{maddress}, #{mphone}, sysdate ) 
+	</insert>
+
+
+
+	<insert id="image_save" parameterType="image">
+		insert into saveimg values(#{img})
+	</insert>
+	
+
+</mapper>
+
+
+
+<!-- #{mem_gender}, null, #{mem_oaddress}, #{mem_address}, #{mem_detailaddress}, 0 -->
