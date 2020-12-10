@@ -29,11 +29,9 @@ import com.dayu.legacy.domain.MemberVO;
 
 @Controller
 public class MemberController {
-
 	
 	@Autowired	
 	private MemberDAOImpl MemberDAO;
-	
 	
 	
 	@RequestMapping("/loginCheck")
